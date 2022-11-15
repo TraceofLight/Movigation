@@ -1,22 +1,18 @@
 <template>
   <div id="app">
-    <nav >
-      <v-app-bar class="d-flex flex-row">
-        <v-app-bar-nav-icon>
-          <v-icon color="blue">mdi-movie-play</v-icon>
-        </v-app-bar-nav-icon>
-        <div class="">Movigator</div>
-        <v-spacer></v-spacer>
-        <div width="250">
-          <router-link to="/" class="mx-3">Home</router-link> | 
-          <router-link to="/calendar" class="mx-3">Calendar</router-link> | 
-          <router-link to="/about" class="mx-3">Search</router-link>
-        </div>
-      </v-app-bar>
-    </nav>
-    <router-view/>
+    <MovieNavbar/>
   </div>
 </template>
+
+<script>
+import MovieNavbar from '@/components/MovieNavbar.vue'
+
+export default {
+  components: {
+    MovieNavbar,
+  }
+}
+</script>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
@@ -37,7 +33,7 @@ nav {
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #87CEEB;
     }
   }
 }
