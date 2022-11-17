@@ -11,7 +11,7 @@ import FeaturedMovie from '@/components/FeaturedMovie.vue'
 export default {
   name: 'HomeView',
   components: {
-    FeaturedMovie
+    FeaturedMovie,
   }
 }
 </script>

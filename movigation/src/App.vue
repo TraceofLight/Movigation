@@ -1,7 +1,17 @@
 <template>
-  <div id="app">
-    <MovieNavbar/>
-  </div>
+  <v-container class="d-flex mx-2">
+    <div id="app" class="d-flex">
+      <MovieNavbar/>
+      <div id="logo-box" class="d-flex">
+        <img src="@/assets/sample.png" style="width: 100%">
+      </div>
+      <div class="d-flex my-3">
+        <h1>Movigator</h1>
+        <br>
+        <h1>Find Your Best Movie</h1>
+      </div>
+    </div>
+  </v-container>
 </template>
 
 <script>
