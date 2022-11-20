@@ -10,46 +10,62 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import json
 from pathlib import Path
-import os
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+secret_file = BASE_DIR / 'secrets.json'
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+with open(secret_file) as s_file:
+    secrets = json.load(s_file)
+
+
+def get_secret(setting, secrets=secrets):
+
+    try:
+        return secrets[setting]
+
+    except KeyError:
+        error_message = f'{setting} has something wrong'
+        raise ImproperlyConfigured(error_message)
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+mc4oz#8gks)py*98y4k-m+8lj5m6z@^o$+&+^8=hmiiea0^0o'
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
-
 INSTALLED_APPS = [
-
-    # 생산한 app
+    # 생산한 APP
     'accounts',
     'movies',
 
-    # 필요 app
-    # REST
+    # 필요 APP
+
+    # Authentication
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
-    'dj_rest_auth.registration',
 
-    # 회원가입 Authentications
+    # Registration
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
+    'dj_rest_auth.registration',
 
-    # 기본 app
+    # Social Authentication
+    'allauth.socialaccount',
+    # Google
+    'allauth.socialaccount.providers.google',
+
+    # 기본 APP
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,7 +74,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-# AUTH app을 위한 site id 설정
+# AUTH APP을 위한 SITE ID 설정
 SITE_ID = 1
 
 MIDDLEWARE = [
@@ -91,7 +107,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pjt.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -101,7 +116,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -121,7 +135,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -135,7 +148,6 @@ USE_L10N = True
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -143,13 +155,24 @@ STATIC_URL = '/static/'
 
 # Media Static File
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Social Authentication
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+)
+
+LOGIN_REDIRECT_URL = '/'
+
+# CORS 설정
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+
+# usermodel customize
+AUTH_USER_MODEL = 'accounts.User'
