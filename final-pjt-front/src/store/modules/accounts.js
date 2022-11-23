@@ -15,6 +15,7 @@ export default {
   
   getters: {
     isLoggedIn: state => !!state.token,
+    isNotLoggedIn: state => state.token == '',
     currentUser: state => state.currentUser,
     profile: state => state.profile,
     loginAuthError: state => state.loginAuthError,
@@ -79,7 +80,7 @@ export default {
               headers: getters.authHeader
             })
           })
-          router.push({ name: 'mainrecommend' })
+          router.push('/')
         })
         .catch(err => {
           commit('SET_SIGNUP_AUTH_ERROR', err.response.data)
@@ -95,13 +96,14 @@ export default {
         method: 'post',
         headers: getters.authHeader,
       })
-      .then(() => {
-        dispatch('removeToken')
-        router.push({ name: 'home' })
-      })
-      .catch(err => {
-        console.error(err.response)
-      })
+        .then(() => {
+          dispatch('removeToken')
+          router.push({ name: 'Home' })
+        })
+        .catch(err => {
+          console.error(err.response)
+          alert(err)
+        })
     },
 
     clearErrorList ({ commit }) {
@@ -119,7 +121,7 @@ export default {
           .catch(err => {
             if (err.response.status === 401) {
               dispatch('removeToken')
-              router.push({ name: 'home' })
+              router.push({ name: 'Home' })
             }
           })
       }

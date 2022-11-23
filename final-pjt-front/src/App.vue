@@ -6,9 +6,11 @@
 
 <script>
 
+  import TheNavbar from '@/components/TheNavbar'
+
   export default {
     components: {
-      TheNavbar: () => import('./components/TheNavbar.vue')
+      TheNavbar,
     },
   }
 

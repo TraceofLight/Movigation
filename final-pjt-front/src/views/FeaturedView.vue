@@ -1,5 +1,6 @@
 <template>
     <v-container>
+      <MovieCarousel/>
     <v-main class="grey lighten-2">
       <v-container>
         <v-row>
@@ -28,9 +29,13 @@
 </template>
 
 <script>
+
+  import MovieCarousel from '../components/MovieCarousel.vue'
+
   export default {
     name: 'FeaturedView',
     components: {
+      MovieCarousel
     },
   }
 </script>

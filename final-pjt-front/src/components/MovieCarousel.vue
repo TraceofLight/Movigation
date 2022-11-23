@@ -56,21 +56,21 @@
           centerMode: true,
           dots: false,
           navButtons: false,
-          slidesToShow: 5,
-          // responsive: [
-          //   {
-          //     breakpoint: 600,
-          //     settings: {
-          //       slidesToShow: 5
-          //     }
-          //   },
-          //   {
-          //     breakpoint: 1000,
-          //     settings: {
-          //       navButtons: true
-          //     }
-          //   }
-          // ]
+          slidesToShow: 3,
+          responsive: [
+            {
+              breakpoint: 600,
+              settings: {
+                slidesToShow: 5
+              }
+            },
+            {
+              breakpoint: 1000,
+              settings: {
+                navButtons: true
+              }
+            }
+          ]
         },
         slides: [
           'https://images.unsplash.com/photo-1453831362806-3d5577f014a4?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
