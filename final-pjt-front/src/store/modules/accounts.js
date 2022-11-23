@@ -55,7 +55,7 @@ export default {
           const token = res.data.key
           dispatch('saveToken', token)
           dispatch('fetchCurrentUser')
-          router.push({ name: 'mainrecommend' })
+          router.push({ name: 'Home' })
         })
         .catch(err => {
           commit('SET_LOGIN_AUTH_ERROR', err.response.data)

@@ -1,6 +1,5 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
-from .views import GoogleLogin
 
 app_name = 'accounts'
 
@@ -12,7 +11,4 @@ app_name = 'accounts'
 urlpatterns = [
     path('profile/', views.user_information),
     path('profile/<username>/', views.information),
-    path('dj-rest-auth/', include('dj_rest_auth.urls')),
-    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
-    path('dj-rest-auth/google/', GoogleLogin.as_view(), name='google_login')
 ]
