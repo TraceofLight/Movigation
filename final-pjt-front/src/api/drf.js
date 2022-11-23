@@ -1,13 +1,14 @@
-const HOST = 'http://localhost:8000/'
+const HOST = 'http://localhost:8000/api/v1/'
 
 const ACCOUNTS = 'accounts/'
 const MOVIES = 'movies/'
-const DRF = 'dj-rest-auth/'
 
 export default {
   accounts: {
-    login: () => HOST + ACCOUNTS + DRF + 'login/',
-    logout: () => HOST + ACCOUNTS + DRF + 'logout/',
+    login: () => HOST + ACCOUNTS + 'login/',
+    logout: () => HOST + ACCOUNTS + 'logout/',
+    signup: () => HOST + ACCOUNTS + 'signup/',
+    googleAuth: () => HOST + ACCOUNTS + 'google/',
   },
   movies: {
     movie: TMDBMovieId => HOST + MOVIES + `${TMDBMovieId}/`,

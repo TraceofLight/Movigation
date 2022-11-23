@@ -1,19 +1,19 @@
 <template>
-  <v-app>
+  <v-app class="d-flex">
     <TheNavbar/>
-    <HomeView/>
   </v-app>
 </template>
 
 <script>
-  import TheNavbar from '@/components/TheNavbar'
-  import HomeView from '@/views/HomeView'
 
   export default {
     components: {
-      TheNavbar,
-      HomeView,
+      TheNavbar: () => import('./components/TheNavbar.vue')
     },
   }
 
 </script>
+
+<style>
+
+</style>

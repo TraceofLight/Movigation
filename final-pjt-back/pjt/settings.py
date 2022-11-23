@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import json
+from datetime import timedelta
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     # Authentication
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt.token_blacklist',
     'dj_rest_auth',
 
     # Registration
@@ -64,6 +66,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # Google
     'allauth.socialaccount.providers.google',
+
+    'corsheaders',
 
     # 기본 APP
     'django.contrib.admin',
@@ -163,12 +167,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Social Authentication
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
-)
+]
 
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'http://localhost:8000/accounts/login'
 
 # CORS 설정
 CORS_ORIGIN_ALLOW_ALL = True
@@ -176,3 +181,31 @@ CORS_ALLOW_CREDENTIALS = True
 
 # usermodel customize
 AUTH_USER_MODEL = 'accounts.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    ),
+}
+
+REST_USE_JWT = True
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+JWT_AUTH_COOKIE = 'my-app-auth'
+JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
+
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+# ACCOUNT_CONFIRM_EMAIL_ON_GET = True

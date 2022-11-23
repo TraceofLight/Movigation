@@ -65,3 +65,7 @@ def change_password(request):
     serializer = UserAccountSerializer(user)
 
     return Response(serializer.data)
+
+@api_view(['GET'])
+def is_auth(request):
+    pass
