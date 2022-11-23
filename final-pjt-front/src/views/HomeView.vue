@@ -1,5 +1,6 @@
 <template>
-  <v-container class="d-flex flex-column">
+  <v-container class="d-flex flex-column align-center">
+    <div style="margin-top: 5%;"></div>
     <div class="logo">
       <span class="letter" data-letter="M">M</span>
       <span class="letter" data-letter="O">O</span>
@@ -12,20 +13,21 @@
       <span class="letter" data-letter="O">O</span>
       <span class="letter" data-letter="N">N</span>
     </div>
-    <div style="mx-auto">
-      <h1>당신의 개쩌는 영화</h1>
+    <div style="margin-top: 5%;"></div>
+    <h1 class="slogan">Find Your Best Movie</h1>
+    <h1>당신의 영화 길잡이</h1>
+    <div class="tech-slideshow">
+      <div class="mover-1"></div>
+      <v-img src="@/assets/panorama-sample.jpg"/>
     </div>
-    <MovieCarousel/>
   </v-container>
 </template>
 
 <script>
-  import MovieCarousel from '../components/MovieCarousel.vue'
 
   export default {
     name: 'HomeView',
     components: {
-      MovieCarousel
     },
   }
 </script>
@@ -33,11 +35,17 @@
 <style>
 
   @import url(https://fonts.googleapis.com/css?family=Lato:900);
+
   *, *:before, *:after{
     box-sizing:border-box;
   }
   body{
     font-family: 'Lato', sans-serif;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+
   }
   div.logo{
     width: 90%;
@@ -73,7 +81,7 @@
     z-index: 3;
     transform:
       rotateX(0deg)
-      rotateY(-15deg)
+      rotateY(-5deg)
       rotateZ(0deg);
   }
   .letter:after{
@@ -86,20 +94,62 @@
       rotateZ(0deg)
       skew(0deg,1deg);
   }
-  .letter:hover:before{
-    color: #686868;
+
+  .logo:hover .letter:before{
+    color: #202020;
     transform:
       rotateX(0deg)
-      rotateY(-40deg)
+      rotateY(-30deg)
       rotateZ(0deg);
   }
-  .letter:hover:after{
+  .logo:hover .letter:after{
     transform:
       scale(1.08,1)
       rotateX(0deg)
       rotateY(40deg)
       rotateZ(0deg)
-      skew(0deg,22deg);
+      skew(0deg,11deg);
   }
+  .slogan {
+    font-size: 5em;
+    color: #00B4F1;
+  }
+
+.tech-slideshow {
+  height: 200px;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.tech-slideshow > div {
+  height: 200px;
+  width: 2526px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transform: translate3d(0, 0, 0);
+}
+.tech-slideshow .mover-1 {
+  animation: moveSlideshow 12s linear infinite;
+}
+.tech-slideshow .mover-2 {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  background-position: 0 -200px;
+  animation: moveSlideshow 15s linear infinite;
+}
+.tech-slideshow:hover .mover-2 {
+  opacity: 1;
+}
+
+@keyframes moveSlideshow {
+  100% { 
+    transform: translateX(-66.6666%);  
+  }
+}
 
 </style>

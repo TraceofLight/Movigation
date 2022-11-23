@@ -63,14 +63,14 @@
           </v-list-item>
         </router-link>
         
-        <v-list-item :to="{ name: 'Login' }">
+        <v-list-item :to="{ name: 'Login' }" v-if="isNotLoggedIn">
           <v-list-item-icon>
             <v-icon>mdi-login</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Login</v-list-item-title>
         </v-list-item>
 
-        <v-list-item link @click="logout()">
+        <v-list-item link v-if="isLoggedIn" @click="logout()">
           <v-list-item-icon>
             <v-icon>mdi-logout</v-icon>
           </v-list-item-icon>
@@ -84,8 +84,8 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import drf from '@/api/drf'
+
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
 
@@ -100,14 +100,13 @@
       }
     },
 
+    computed: {
+    ...mapGetters(['isLoggedIn', 'isNotLoggedIn'])
+    },
+
     methods: {
-      testLogout() {
-        axios({
-          url: drf.accounts.logout(),
-          method: "post",
-        })
-      }
-    }
+      ...mapActions(['logout']),
+    },
   }
 </script>
 

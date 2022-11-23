@@ -9,7 +9,7 @@ import requests
 from pathlib import Path
 
 from .models import Movie, Genre
-from .serializers import MovieSerializer, MovieListSerializer
+from .serializers import MovieSerializer, MovieListSerializer, GenreSerializer
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 json_file = BASE_DIR / 'secrets.json'
@@ -72,17 +72,20 @@ def update_select_movie(tmdb_movie_id):
     return update_movie(response)
 
 
-def update_movie(movie_add_db):
+def update_movie(each_movie):
 
-    tmdb_movie_id = movie_add_db['id']
-    title = movie_add_db['title']
-    poster_path = movie_add_db.get('poster_path', '')
-    vote_average = movie_add_db['vote_average']
-    overview = movie_add_db['overview']
+    tmdb_movie_id = each_movie['id']
+    title = each_movie['title']
+    poster_path = each_movie.get('poster_path', '')
+    backdrop_path = each_movie.get('backdrop_path', '')
+    vote_average = each_movie['vote_average']
+    vote_count = each_movie['vote_count']
+    overview = each_movie['overview']
+    release_date = each_movie.get('release_date')
 
     if Movie.objects.filter(tmdb_movie_id=tmdb_movie_id).exists():
 
-        movie = get_object_or_404(Movie, tmdb_movie_id=tmdb_movie_id)
+        movie = Movie.get.objects.filter(tmdb_movie_id=tmdb_movie_id)
 
     else:
 
@@ -90,22 +93,124 @@ def update_movie(movie_add_db):
             tmdb_movie_id=tmdb_movie_id,
             title=title,
             poster_path=poster_path,
+            backdrop_path=backdrop_path,
             vote_average=vote_average,
+            vote_count=vote_count,
             overview=overview,
+            release_date=release_date,
         )
+
         movie.save()
 
-        if movie_add_db.get('genre_ids'):
-            genres = movie_add_db['genre_ids']
+        if each_movie.get('genre_ids'):
+            genres = each_movie['genre_ids']
             for genre_id in genres:
                 genre = get_object_or_404(Genre, tmdb_genre_id=genre_id)
                 movie.genres.add(genre)
 
-        elif movie_add_db.get('genres'):
-            genres = movie_add_db['genres']
+        elif each_movie.get('genres'):
+            genres = each_movie['genres']
             for genre in genres:
                 genre_id = genre['id']
                 genre = get_object_or_404(Genre, tmdb_genre_id=genre_id)
                 movie.genres.add(genre)
 
     return movie
+
+
+@api_view(['GET', 'POST'])
+def get_data(request):
+
+    for page in range(1, 21):
+
+        path = '/movie/top_rated'
+
+        params = {
+            'api_key': API_KEY,
+            'language': 'ko',
+            'page': page,
+        }
+
+        response = requests.get(BASE_URL + path, params=params).json()
+
+        for each_movie in response['results']:
+
+            try:
+
+                tmdb_movie_id = each_movie['id']
+                title = each_movie.get('title')
+                poster_path = each_movie.get('poster_path', '')
+                backdrop_path = each_movie.get('backdrop_path', '')
+                vote_average = each_movie.get('vote_average')
+                vote_count = each_movie.get('vote_count')
+                overview = each_movie.get('overview')
+                release_date = each_movie.get('release_date')
+
+                movie = Movie(
+                    tmdb_movie_id = tmdb_movie_id,
+                    title = title,
+                    poster_path = poster_path,
+                    backdrop_path = backdrop_path,
+                    vote_average = vote_average,
+                    vote_count = vote_count,
+                    overview = overview,
+                    release_date = release_date,
+                )
+
+                movie.save()
+
+                if each_movie.get('genre_ids'):
+                    genres = each_movie['genre_ids']
+                    for genre_id in genres:
+                        genre = Genre.objects.filter(tmdb_genre_id=genre_id)
+                        movie.genres.add(genre)
+
+                elif each_movie.get('genres'):
+                    genres = each_movie['genres']
+                    for genre in genres:
+                        genre_id = genre['id']
+                        genre = Genre.objects.filter(tmdb_genre_id=genre_id)
+                        movie.genres.add(genre)
+
+            except:
+                pass
+
+    movies = get_list_or_404(Movie)
+    serializer = MovieListSerializer(movies, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+def add_genre(request):
+
+    genre_file = BASE_DIR / 'genres.json'
+
+    with open(genre_file, encoding='UTF-8') as g_file:
+        genre_data = json.load(g_file)
+
+    for each_genre in genre_data:
+
+        each_genre_data = each_genre['fields']
+
+        tmdb_genre_id = each_genre_data['tmdb_genre_id']
+        name = each_genre_data['name']
+        like_users = each_genre_data['like_users']
+
+        genre = Genre(
+            tmdb_genre_id=tmdb_genre_id,
+            name=name,
+        )
+
+        genre.save()
+
+        like_users = each_genre_data['like_users']
+
+        for user_id in like_users:
+            like_user = Movie.objects.filter(like_users=user_id)
+            genre.like_users.add(like_user)
+
+    genres = get_list_or_404(Genre)
+    serializer = GenreSerializer(genres, many=True)
+
+    return Response(serializer.data)

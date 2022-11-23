@@ -10,15 +10,20 @@
               <div class="autocomplete-fix">
                 <input disabled type="password">
               </div>
+
               <!-- <input id="email" type="text" placeholder="Email"> -->
-              <input v-model="payload.credentials.username" type="text" placeholder="Username" required />
-              <input v-model="payload.credentials.password" type="password" placeholder="Password" required />
+              <input v-model="credentials.username" type="text" placeholder="Username" required />
+              <label>Username</label>
+
+              <input @keypress.enter="login(credentials)" v-model="credentials.password" type="password" placeholder="Password" required />
+              <label>Password</label>
+
             </form>
 
             <div style="margin-top: 21px"/>
 
             <div class="button-set">
-              <button id="login-btn" @click="login(payload)">SIGN IN</button>
+              <button id="login-btn" @click.prevent="login(credentials)">SIGN IN</button>
               <router-link :to="{ name: 'Signup' }">
                 <button id="register-btn" >Register</button>
               </router-link>
@@ -53,11 +58,9 @@
         modalWidth: MODAL_WIDTH,
         // googleId: googleId,
         // googleRedirect: googleRedirect,
-        payload: {
-          credentials: {
-            'username': '',
-            'password': '',
-          },
+        credentials: {
+          'username': '',
+          'password': '',
         },
       }
     },
