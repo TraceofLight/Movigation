@@ -38,12 +38,12 @@ export default {
   actions: {
     saveToken({ commit }, token) {
       commit('SET_TOKEN', token)
-      localStorage.removeItem('token')
+      localStorage.setItem('token', '')
     },
-
+    
     removeToken({ commit }) {
       commit('SET_TOKEN', '')
-      localStorage.setItem('token', '')
+      localStorage.removeItem('token')
     },
 
     login({ commit, dispatch }, credentials) {
@@ -60,7 +60,7 @@ export default {
         })
         .catch(err => {
           commit('SET_LOGIN_AUTH_ERROR', err.response.data)
-          alert(err)
+          alert('계정에 로그인할 수 없습니다.')
         })
     },
 
@@ -81,10 +81,11 @@ export default {
               headers: getters.authHeader
             })
           })
-          router.push('/')
+          router.push({ name: 'Home' })
         })
         .catch(err => {
           commit('SET_SIGNUP_AUTH_ERROR', err.response.data)
+          alert(`가입에 문제가 발생했습니다. ${err}`)
         })
     },
 
@@ -96,11 +97,11 @@ export default {
       })
         .then(() => {
           dispatch('removeToken')
-          router.push({ name: 'Home' })
+          dispatch('fetchCurrentUser')
         })
         .catch(err => {
           console.error(err.response)
-          alert(err)
+          alert('err')
         })
     },
 

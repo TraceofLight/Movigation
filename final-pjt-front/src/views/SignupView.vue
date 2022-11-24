@@ -1,5 +1,5 @@
 <template>
-  <v-container id="theNavbar">
+  <v-container id="SignupView">
     <div class="box d-flex mx-auto">
       <div class="box-part" id="bp-left">
         <div class="partition" id="partition-register">
@@ -9,10 +9,10 @@
               <div class="autocomplete-fix">
                 <input disabled type="password password2">
               </div>
-              <input id="email" type="text" placeholder="Email">
-              <input id="username" type="text" placeholder="Username">
-              <input id="password" type="password" placeholder="Password">
-              <input id="password2" type="password2" placeholder="Password Confirmation">
+              <input v-model="payload.credentials.email" id="email" type="text" placeholder="Email" required>
+              <input v-model="payload.credentials.username" id="username" type="text" placeholder="Username" required>
+              <input v-model="payload.credentials.password1" id="password1" type="password" placeholder="Password" required>
+              <input v-model="payload.credentials.password2" id="password2" type="password" placeholder="Password Confirmation" required>
             </form>
 
             <div style="margin-top: 21px">
@@ -26,27 +26,32 @@
         </div>
       </div>
       <div class="box-part" id="bp-right">
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="10770">TV영화</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="878">SF</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="10751">가족</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="27">공포</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="99">다큐멘터리</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="18">드라마</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="10749">로맨스</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="12">모험</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="9648">미스터리</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="80">범죄</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="37">서부</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="53">스릴러</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="16">애니메이션</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="28">액션</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="36">역사</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="10402">음악</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="10752">전쟁</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="35">코미디</v-btn>
-        <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="14">판타지</v-btn>
       </div>
     </div>
+  <div class="genre-box d-flex flex-column justify-center">
+    <h1 class="mx-auto mt-12 mb-10 genre-title">Choose Favorite Genre</h1>
+    <v-btn-toggle class="d-flex flex-wrap" color="primary" v-model="toggle_multiple" multiple>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="10770">TV영화</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="878">SF</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="10751">가족</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="27">공포</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="99">다큐멘터리</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="18">드라마</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="10749">로맨스</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="12">모험</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="9648">미스터리</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="80">범죄</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="37">서부</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="53">스릴러</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="16">애니메이션</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="28">액션</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="36">역사</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="10402">음악</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="10752">전쟁</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="35">코미디</v-btn>
+      <v-btn x-large @click="onSelectGenre" class="raise genre-button" data-id="14">판타지</v-btn>
+    </v-btn-toggle>
+  </div>
   </v-container>
 </template>
 
@@ -54,13 +59,10 @@
 
   import { mapActions, mapGetters } from 'vuex'
 
-  const MODAL_WIDTH = 656
-
   export default {
     name: 'SignupView',
     data: function () {
       return {
-        modalWidth: MODAL_WIDTH,
         payload: {
           genres: [],
           credentials: {
@@ -71,15 +73,12 @@
           },
       }}
     },
-    created() {
-      this.modalWidth =
-        window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
-    },
     computed: {
       ...mapGetters(['signupAuthError'])
     },
     methods: {
       ...mapActions(['signup']),
+
       onSelectGenre: function (event) {
         const genreId = event.target.dataset.id
         const genreBtn = event.target
@@ -98,6 +97,10 @@
 </script>
 
 <style lang="scss">
+
+#SignupView {
+  padding-top: 5%;
+}
 
 .box {
   background: white;
@@ -220,6 +223,7 @@
   transform: translateY(24px);
 }
 .genre-button {
-  margin-top: 0;
+  margin: 5px;
+  width: 30px;
 }
 </style>

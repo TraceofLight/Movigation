@@ -214,3 +214,17 @@ def add_genre(request):
     serializer = GenreSerializer(genres, many=True)
 
     return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+def genre_like(request, tmdb_genre_id):
+    genre = get_object_or_404(Genre, tmdb_genre_id=tmdb_genre_id)
+    if request.method == 'GET':
+        pass
+    elif request.method == 'POST':
+        if genre.like_users.filter(pk=request.user.pk).exists():
+            genre.like_users.remove(request.user)
+        else:
+            genre.like_users.add(request.user)
+    serializer = GenreSerializer(genre)
+    return Response(serializer.data)
