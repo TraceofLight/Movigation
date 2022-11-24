@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     # Authentication
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_simplejwt.token_blacklist',
+    # 'rest_framework_simplejwt.token_blacklist',
     'dj_rest_auth',
 
     # Registration
@@ -209,3 +209,5 @@ REST_FRAMEWORK = {
 # ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 # ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'

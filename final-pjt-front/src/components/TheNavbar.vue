@@ -54,7 +54,7 @@
           </v-list-item>
         </router-link>
 
-        <router-link style="text-decoration: none;" :to="{ name: 'Profile' }">
+        <router-link style="text-decoration: none;" :to="{ name: 'Profile' }" v-if="isLoggedIn">
           <v-list-item link>
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
@@ -75,6 +75,13 @@
             <v-icon>mdi-logout</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item :to="{ name: 'Signup' }" v-if="isNotLoggedIn">
+          <v-list-item-icon>
+            <v-icon>mdi-clipboard-account-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Sign Up</v-list-item-title>
         </v-list-item>
 
       </v-navigation-drawer>

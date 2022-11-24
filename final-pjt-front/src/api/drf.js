@@ -13,5 +13,6 @@ export default {
   },
   movies: {
     movie: TMDBMovieId => HOST + MOVIES + `${TMDBMovieId}/`,
+    likeGenre: TMDBGenreId => HOST + MOVIES + `${TMDBGenreId}/` + 'genre/',
   },
 }
