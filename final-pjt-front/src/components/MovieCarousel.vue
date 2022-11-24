@@ -3,9 +3,9 @@
       <div class="container">
           <div class="row">
               <div class="col-xs-12">
-                  <h2 class="section__title"><strong></strong> TOP Featured<code-pen id="yrQyBj"></code-pen>
+                  <h2 class="section__title"><strong></strong> TOP Featured
                   </h2>
-                  <p class="section__description">Find Your Best Movie</p>
+                  <p class="section__description">TMDB Selection</p>
               </div>
           </div>
           <div class="row">
@@ -90,7 +90,7 @@
   }
 </script>
 
-<style>
+<style scoped>
 .carousel .main {
   margin-bottom: 30px; }
 

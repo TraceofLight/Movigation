@@ -8,7 +8,8 @@ export default {
     login: () => HOST + ACCOUNTS + 'login/',
     logout: () => HOST + ACCOUNTS + 'logout/',
     signup: () => HOST + ACCOUNTS + 'signup/',
-    googleAuth: () => HOST + ACCOUNTS + 'google/',
+    currentUserInfo: () => HOST + ACCOUNTS + 'user/',
+    // googleAuth: () => HOST + ACCOUNTS + 'google/',
   },
   movies: {
     movie: TMDBMovieId => HOST + MOVIES + `${TMDBMovieId}/`,

@@ -5,6 +5,7 @@ import FeaturedView from '../views/FeaturedView.vue'
 import SearchView from '../views/SearchView.vue'
 import ReviewView from '../views/ReviewView.vue'
 import LoginView from '../views/LoginView.vue'
+import LogoutView from '../views/LogoutView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import SignupView from '../views/SignupView.vue'
 
@@ -46,6 +47,11 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: SignupView
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: LogoutView
   },
 ]
 

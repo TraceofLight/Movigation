@@ -70,7 +70,7 @@
           <v-list-item-title>Login</v-list-item-title>
         </v-list-item>
 
-        <v-list-item link v-if="isLoggedIn" @click="logout()">
+        <v-list-item :to="{ name: 'Logout' }" v-if="isLoggedIn">
           <v-list-item-icon>
             <v-icon>mdi-logout</v-icon>
           </v-list-item-icon>

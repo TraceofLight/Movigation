@@ -38,7 +38,7 @@ export default {
   actions: {
     saveToken({ commit }, token) {
       commit('SET_TOKEN', token)
-      localStorage.setItem('token', token)
+      localStorage.removeItem('token')
     },
 
     removeToken({ commit }) {
@@ -60,6 +60,7 @@ export default {
         })
         .catch(err => {
           commit('SET_LOGIN_AUTH_ERROR', err.response.data)
+          alert(err)
         })
     },
 
@@ -88,9 +89,6 @@ export default {
     },
 
     logout({ getters, dispatch }) {
-      if ( window.Kakao.Auth.getAccessToken() ) {
-        window.Kakao.Auth.logout()
-      } 
       axios({
         url: drf.accounts.logout(),
         method: 'post',

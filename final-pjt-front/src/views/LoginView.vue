@@ -1,5 +1,5 @@
 <template>
-  <v-container id="theNavbar">
+  <v-container id="loginView">
     <div class="box d-flex mx-auto">
       <div class="box-part" id="bp-left">
         <div class="partition" id="partition-register">
@@ -78,7 +78,7 @@
 </script>
 <style lang="scss">
 
-#theNavbar {
+#loginView {
   padding-top: 11%;
 };
 

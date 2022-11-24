@@ -1,6 +1,5 @@
 <template>
   <v-container class="d-flex flex-column align-center">
-    <div style="margin-top: 5%;"></div>
     <div class="logo">
       <span class="letter" data-letter="M">M</span>
       <span class="letter" data-letter="O">O</span>
@@ -13,13 +12,85 @@
       <span class="letter" data-letter="O">O</span>
       <span class="letter" data-letter="N">N</span>
     </div>
-    <div style="margin-top: 5%;"></div>
     <h1 class="slogan">Find Your Best Movie</h1>
-    <h1>당신의 영화 길잡이</h1>
-    <div class="tech-slideshow">
-      <div class="mover-1"></div>
-      <v-img src="@/assets/panorama-sample.jpg"/>
+    <div style="margin-top: 5%;"/>
+
+    <section class="carousel">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="carousel__wrapper">
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/1/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/2/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/3/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/4/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/5/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/6/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/7/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/8/200/300');"></div>
+            </div>
+
+            <!--#### repeat ####-->
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/1/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/2/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/3/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/4/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/5/200/300');"></div>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/6/200/300');"/>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/7/200/300');"/>
+            </div>
+
+            <div class="carousel__slide">
+              <div class="carousel__image" style="background-image: url('https://picsum.photos/seed/8/200/300');"/>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
   </v-container>
 </template>
 
@@ -115,41 +186,70 @@
     color: #00B4F1;
   }
 
-.tech-slideshow {
-  height: 200px;
-  max-width: 800px;
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-  transform: translate3d(0, 0, 0);
+/* carousel */
+
+:root {
+  --no-of-slides: 8;
+  --slides-in-view: 6;
+  --slide-width: 200px;
+  --slide-height: 300px;
+  --iteration-time: 10s;
 }
 
-.tech-slideshow > div {
-  height: 200px;
-  width: 2526px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  transform: translate3d(0, 0, 0);
-}
-.tech-slideshow .mover-1 {
-  animation: moveSlideshow 12s linear infinite;
-}
-.tech-slideshow .mover-2 {
-  opacity: 0;
-  transition: opacity 0.5s ease-out;
-  background-position: 0 -200px;
-  animation: moveSlideshow 15s linear infinite;
-}
-.tech-slideshow:hover .mover-2 {
-  opacity: 1;
-}
-
-@keyframes moveSlideshow {
-  100% { 
-    transform: translateX(-66.6666%);  
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
   }
+  100% {
+    transform: translateX(calc(var(--slide-width) * var(--no-of-slides)* -1));
+  }
+}
+
+.carousel__wrapper {
+  display:flex;
+
+  /*justify-content: center;*/
+  align-items: center;
+  
+  width: 100vw;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.carousel {
+  overflow: hidden;
+}
+
+.carousel__slide {
+  animation: scroll var(--iteration-time) linear infinite;
+  display: flex;
+  flex-direction: column;
+  
+  flex: 0 0 auto;
+  width: var(--slide-width);
+  height: var(--slide-height);
+  box-sizing: border-box;
+  /*border: 1px dotted darkblue;*/
+}
+
+.carousel__image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  
+  height: 100%;
+}
+
+/* just for analysis remove this 3 rules later*/
+.carousel__slide {
+  position: relative;
+}
+
+.carousel__slide::before {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  font-size: 2rem;
+  color: lime;
 }
 
 </style>
